@@ -1,5 +1,5 @@
 output "vpc_id" {
-  value = module.network.vpc_id
+  value = module.network.aws_vpc.main.vpc_id
 }
 
 output "public_subnets" {
