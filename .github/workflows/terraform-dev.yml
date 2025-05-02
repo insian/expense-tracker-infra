@@ -46,23 +46,23 @@ jobs:
         run: terraform workspace list
         working-directory: infra/
 
-      # - name: Select Workspace Based on Branch
-      #   run: |
-      #     case "${GITHUB_REF##*/}" in
-      #       dev)
-      #         WORKSPACE="expense-tracker-infra-dev"
-      #         ;;
-      #       master)
-      #         WORKSPACE="expense-tracker-infra-prd"
-      #         ;;
-      #       *)
-      #         echo "Branch not mapped to a workspace."
-      #         exit 1
-      #         ;;
-      #     esac
-      #     echo "Using workspace: $WORKSPACE"
-      #     terraform workspace select $WORKSPACE
-      #   working-directory: infra/
+      - name: Select Workspace Based on Branch
+        run: |
+          case "${GITHUB_REF##*/}" in
+            dev)
+              WORKSPACE="expense-tracker-infra-dev"
+              ;;
+            master)
+              WORKSPACE="expense-tracker-infra-prd"
+              ;;
+            *)
+              echo "Branch not mapped to a workspace."
+              exit 1
+              ;;
+          esac
+          echo "Using workspace: $WORKSPACE"
+          terraform workspace select $WORKSPACE || terraform workspace new $WORKSPACE
+        working-directory: infra/
 
       # - name: Terraform Plan
       #   env:
