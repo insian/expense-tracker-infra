@@ -8,3 +8,11 @@ terraform {
 
   required_version = ">= 1.6.0"
 }
+
+provider "aws" {
+  region = var.AWS_REGION
+}
+
+module "network" {
+  source = "./network"
+}
