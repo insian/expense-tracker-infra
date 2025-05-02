@@ -21,7 +21,11 @@ jobs:
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
-      
+        
+      - name: Terraform Init (Terraform Cloud)
+        run: terraform init -input=false
+        working-directory: infra/
+
       - name: Select Workspace Based on Branch
         run: |
           case "${GITHUB_REF##*/}" in
@@ -38,10 +42,6 @@ jobs:
           esac
           echo "Using workspace: $WORKSPACE"
           terraform workspace select "$WORKSPACE"
-        working-directory: infra/
-        
-      - name: Terraform Init (Terraform Cloud)
-        run: terraform init -input=false
         working-directory: infra/
 
       - name: Terraform Plan
