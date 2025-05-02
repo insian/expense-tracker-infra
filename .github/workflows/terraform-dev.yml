@@ -38,11 +38,13 @@ jobs:
           }
           EOF
 
-      
-
-      - name: Terraform Workspace list
-        run: terraform workspace list
+      - name: Terraform Init (Terraform Cloud)
+        run: terraform init -input=false
         working-directory: infra/
+
+      # - name: Terraform Workspace list
+      #   run: terraform workspace list
+      #   working-directory: infra/
 
       - name: Select Workspace Based on Branch
         run: |
@@ -61,10 +63,7 @@ jobs:
           echo "Using workspace: $WORKSPACE"
           terraform workspace select $WORKSPACE || terraform workspace new $WORKSPACE
         working-directory: infra/
-      
-      - name: Terraform Init (Terraform Cloud)
-        run: terraform init -input=false
-        working-directory: infra/
+
       # - name: Terraform Plan
       #   env:
       #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
