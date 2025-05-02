@@ -21,7 +21,25 @@ jobs:
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
-
+      
+      - name: Select Workspace Based on Branch
+        run: |
+          case "${GITHUB_REF##*/}" in
+            dev)
+              WORKSPACE="expense-tracker-infra-dev"
+              ;;
+            master)
+              WORKSPACE="expense-tracker-infra-prd"
+              ;;
+            *)
+              echo "Branch not mapped to a workspace."
+              exit 1
+              ;;
+          esac
+          echo "Using workspace: $WORKSPACE"
+          terraform workspace select "$WORKSPACE"
+        working-directory: infra/
+        
       - name: Terraform Init (Terraform Cloud)
         run: terraform init -input=false
         working-directory: infra/
