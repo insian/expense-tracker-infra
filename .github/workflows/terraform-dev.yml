@@ -57,7 +57,7 @@ jobs:
               ;;
           esac
           echo "Using workspace: $WORKSPACE"
-          terraform workspace select ${{ WORKSPACE }}
+          terraform workspace select $WORKSPACE
         working-directory: infra/
 
       - name: Terraform Plan
