@@ -42,9 +42,9 @@ jobs:
         run: terraform init -input=false
         working-directory: infra/
 
-      # - name: Terraform Workspace list
-      #   run: terraform workspace list
-      #   working-directory: infra/
+      - name: Terraform Workspace list
+        run: terraform workspace list
+        working-directory: infra/
 
       - name: Select Workspace Based on Branch
         run: |
