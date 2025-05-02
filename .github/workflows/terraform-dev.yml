@@ -9,6 +9,9 @@ jobs:
     name: Terraform Plan on Dev
     runs-on: ubuntu-latest
 
+    env:
+      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+
     permissions:
       contents: read
       id-token: write  # For OIDC auth (if used)
@@ -21,7 +24,7 @@ jobs:
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
-        
+
       - name: Terraform Init (Terraform Cloud)
         run: terraform init -input=false
         working-directory: infra/
